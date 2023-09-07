@@ -8,7 +8,7 @@ class RoutePage {
   static Route<dynamic> allRoutes(RouteSettings setting) {
     switch (setting.name) {
       case intro:
-        return MaterialPageRoute(builder: (_) => IntroPage());
+        return MaterialPageRoute(builder: (x) => IntroPage());
       case login:
         return MaterialPageRoute(builder: (_) => LoginPage());
     }
