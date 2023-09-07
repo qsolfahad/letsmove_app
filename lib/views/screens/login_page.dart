@@ -1,45 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:letsmove_app/views/bloc/login_bloc.dart';
-import 'package:letsmove_app/views/intro_page.dart';
+import 'package:letsmove_app/routes/routes_name.dart';
+import 'package:letsmove_app/views/blocs/login/bloc/login_bloc.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
-  State createState() => _LoginPageState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State {
-//instance of Login Bloc
-  final _loginBloc = LoginPage();
-//controllers for text fields
+class _LoginScreenState extends State<LoginScreen> {
+  // Instance of LoginBloc
+  final _loginBloc = LoginBloc();
+
+  // Controllers for text fields
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<LoginBloc>(
-//providing login bloc
-      create: (context) {
-        return LoginBloc();
-      },
+    return BlocProvider(
+      // Providing login bloc
+      create: (context) => _loginBloc,
       child: BlocListener<LoginBloc, LoginState>(
-//providing listener for login bloc
+        // Providing listener for login bloc
         listener: (context, state) {
           if (state is LoginValidation) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("${state.value}"),
             ));
           }
-          if (state is LoginLoading) {}
+          if (state is LoginLoading) {
+            // You can add loading indicators or actions here
+          }
           if (state is LoginLoaded) {
-//if successfully credentials matches the loaded state called
+            // If successfully logged in, navigate to HomeScreen
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Successfully Logged in"),
             ));
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) {
-                return IntroPage(); //push to HomeScreen
-              },
-            ));
+            Navigator.of(context).pushNamed(intro);
           }
         },
         child: Scaffold(
@@ -54,9 +52,10 @@ class _LoginPageState extends State {
                 child: Text(
                   'Welcome Back',
                   style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold),
+                    fontSize: 25,
+                    color: Colors.redAccent,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               Container(
@@ -72,14 +71,14 @@ class _LoginPageState extends State {
                       controller: emailController,
                       decoration: InputDecoration(
                         hintText: 'Email',
-                        // errorText: validate ? errorText : null,
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue),
+                          borderSide: BorderSide(color: Colors.redAccent),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black38),
-                            borderRadius: BorderRadius.circular(10)),
+                          borderSide: BorderSide(color: Colors.black38),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -91,14 +90,14 @@ class _LoginPageState extends State {
                       controller: passwordController,
                       decoration: InputDecoration(
                         hintText: 'Password',
-//
-                        // errorText: validate ? errorText : null,
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                            borderRadius: BorderRadius.circular(10)),
+                          borderSide: BorderSide(color: Colors.redAccent),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black38),
-                            borderRadius: BorderRadius.circular(10)),
+                          borderSide: BorderSide(color: Colors.black38),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -113,28 +112,30 @@ class _LoginPageState extends State {
                               Expanded(
                                 child: ElevatedButton(
                                   style: ButtonStyle(
-                                      elevation: MaterialStatePropertyAll(6),
-                                      backgroundColor: MaterialStatePropertyAll(
-                                          Colors.blue),
-                                      shape: MaterialStatePropertyAll(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(6)))),
+                                    elevation: MaterialStateProperty.all(6),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.redAccent),
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                    ),
+                                  ),
                                   onPressed: () {
                                     setState(() {
-//adding event on Widget OnPressed Method
-                                      // _loginBloc.add(GetLogin(
-                                      //   email: emailController.text,
-                                      //   password: passwordController.text,
-                                      // ));
+                                      // Adding event on Widget OnPressed Method
+                                      _loginBloc.add(GetLogin(
+                                        email: emailController.text,
+                                        password: passwordController.text,
+                                      ));
                                     });
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 15),
-                                    child: Text(
-                                      'Login',
+                                      horizontal: 20,
+                                      vertical: 15,
                                     ),
+                                    child: Text('Login'),
                                   ),
                                 ),
                               ),
@@ -145,16 +146,16 @@ class _LoginPageState extends State {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pop(context);
+                              Navigator.of(context).pushNamed(signup);
                             },
                             child: Text(
                               'New User? Signup Here',
-                              style: TextStyle(color: Colors.blue),
+                              style: TextStyle(color: Colors.redAccent),
                             ),
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -163,5 +164,14 @@ class _LoginPageState extends State {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the controllers when the widget is disposed
+    _loginBloc.close();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 }
