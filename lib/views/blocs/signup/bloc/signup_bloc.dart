@@ -18,6 +18,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
             //storing data in SharedPreferences
             SharedPreferences prefs = await SharedPreferences.getInstance();
             print(event.email);
+            prefs.setString('name', "${event.fullname}");
             prefs.setString('email', "${event.email}");
             prefs.setString('password', "${event.password}");
             emit(SignupLoaded());

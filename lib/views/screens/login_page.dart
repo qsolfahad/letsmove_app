@@ -37,23 +37,24 @@ class _LoginScreenState extends State<LoginScreen> {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Successfully Logged in"),
             ));
-            Navigator.of(context).pushNamed(intro);
+            Navigator.pushNamedAndRemoveUntil(
+                context, option, (route) => false);
           }
         },
         child: Scaffold(
-          appBar: AppBar(
-            title: Text('Authentication App'),
-            backgroundColor: Colors.blue,
-          ),
-          body: Column(
+            body: SingleChildScrollView(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 20,
+              ),
               Container(
                 child: Text(
                   'Welcome Back',
                   style: TextStyle(
                     fontSize: 25,
-                    color: Colors.redAccent,
+                    color: Colors.blue,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -72,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: InputDecoration(
                         hintText: 'Email',
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.redAccent),
+                          borderSide: BorderSide(color: Colors.blue),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         border: OutlineInputBorder(
@@ -91,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: InputDecoration(
                         hintText: 'Password',
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.redAccent),
+                          borderSide: BorderSide(color: Colors.blue),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         border: OutlineInputBorder(
@@ -113,8 +114,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: ElevatedButton(
                                   style: ButtonStyle(
                                     elevation: MaterialStateProperty.all(6),
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.redAccent),
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.blue),
                                     shape: MaterialStateProperty.all(
                                       RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(6),
@@ -150,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: Text(
                               'New User? Signup Here',
-                              style: TextStyle(color: Colors.redAccent),
+                              style: TextStyle(color: Colors.blue),
                             ),
                           ),
                         ],
@@ -161,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ],
           ),
-        ),
+        )),
       ),
     );
   }

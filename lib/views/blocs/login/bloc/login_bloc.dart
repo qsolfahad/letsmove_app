@@ -1,16 +1,19 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:letsmove_app/model/data/userInfo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
 String? sfEmail;
 String? sfPassword;
+String? sfName;
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitial()) {
-//calling function to get value by SharedPreferences 
- getStringValuesSF();
+//calling function to get value by SharedPreferences
+    print('in');
+    getStringValuesSF();
     on((event, emit) async {
       if (event is GetLogin) {
         String value = validation(event);
@@ -54,7 +57,10 @@ String validation(GetLogin data) {
 //function for getting value from SharedPreferences
 getStringValuesSF() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
+
   sfEmail = prefs.getString('email').toString();
+  sfName = prefs.getString('name').toString();
   print(sfEmail);
   sfPassword = prefs.getString('password').toString();
+  UserInfoModel(email: sfEmail!, name: sfName!, phone: sfPassword!);
 }

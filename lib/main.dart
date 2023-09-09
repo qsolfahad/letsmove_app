@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:letsmove_app/routes/routes_name.dart';
 import 'package:letsmove_app/routes/routes_page.dart';
 import 'package:letsmove_app/views/blocs/intro/bloc/intro_bloc.dart';
+import 'package:letsmove_app/views/blocs/login/bloc/login_bloc.dart';
+import 'package:letsmove_app/views/blocs/signup/bloc/signup_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,8 +20,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => IntroBloc(FirestoreService()),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<IntroBloc>(
+              create: (context) => IntroBloc(FirestoreService())),
+          BlocProvider<LoginBloc>(create: (context) => LoginBloc()),
+          BlocProvider<SignupBloc>(create: (context) => SignupBloc()),
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Membership Management',
