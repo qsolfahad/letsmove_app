@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:letsmove_app/routes/routes_name.dart';
 import 'package:letsmove_app/views/blocs/login/bloc/login_bloc.dart';
+import 'package:letsmove_app/views/screens/transparent.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../blocs/intro/bloc/intro_bloc.dart';
 
@@ -26,68 +28,73 @@ class _IntroPageState extends State<IntroPage> {
   @override
   void initState() {
     BlocProvider.of<IntroBloc>(context).add(LoadIntroData());
-
+    getStringValuesSF();
+    Future.delayed(const Duration(milliseconds: 10), () {
+      if (sfEmail != 'null' && sfEmail != null) {
+        Navigator.pushNamedAndRemoveUntil(context, home, (route) => false);
+      }
+    });
     super.initState();
-  }
-
-  Widget _buildFullscreenImage() {
-    return Image.asset(
-      'assets/fullscreen.jpg',
-      fit: BoxFit.cover,
-      height: double.infinity,
-      width: double.infinity,
-      alignment: Alignment.center,
-    );
-  }
-
-  Widget _buildImage(String assetName, [double width = 350]) {
-    return Image.asset('$assetName', width: width);
   }
 
   @override
   Widget build(BuildContext context) {
-    const bodyStyle = TextStyle(fontSize: 19.0);
-    const pageDecoration = PageDecoration(
-      titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
-      bodyTextStyle: bodyStyle,
-      bodyPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-      pageColor: Colors.white,
-      imagePadding: EdgeInsets.zero,
-    );
+    const bodyStyle = TextStyle(
+        fontSize: 16.0, color: Colors.white, fontWeight: FontWeight.bold);
 
     return Scaffold(
       body: BlocBuilder<IntroBloc, IntroState>(builder: (context, state) {
         if (state is IntroStateLoading) {
-          return CircularProgressIndicator(); // Loading indicator
+          return const Center(
+              child: CircularProgressIndicator()); // Loading indicator
         } else if (state is IntroLoaded) {
           final data = state.data;
           return IntroductionScreen(
+            globalBackgroundColor: Colors.black,
             key: introKey,
             allowImplicitScrolling: true,
             autoScrollDuration: 3000,
             //  infiniteAutoScroll: true,
 
-            globalFooter: SizedBox(
-              width: double.infinity,
-              height: 60,
-              child: ElevatedButton(
-                child: const Text(
-                  'Let\'s go right away!',
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                ),
-                onPressed: () => _onIntroEnd(context),
-              ),
-            ),
+            //  globalFooter: SizedBox(),
             pages: List<PageViewModel>.generate(
               data.length,
               (index) {
                 final document = data[index];
                 return PageViewModel(
-                  title: document.title,
-                  body: document.body,
-                  image: _buildImage(
-                      document.image), // Replace with your image logic
-                );
+                    title: document.title,
+                    decoration: PageDecoration(
+                        boxDecoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/image/intro1.jpeg',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        titleTextStyle: TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white),
+                        bodyTextStyle: bodyStyle,
+                        bodyPadding: EdgeInsets.zero,
+                        // bodyPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+                        imagePadding: EdgeInsets.all(0),
+                        footerPadding: EdgeInsets.zero),
+                    body: document.body,
+                    image: SizedBox(
+                      height: 300,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 60),
+                        child: Text(
+                          'Virtuagym',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ));
               },
             ),
             onDone: () => _onIntroEnd(context),
@@ -97,31 +104,66 @@ class _IntroPageState extends State<IntroPage> {
             skipOrBackFlex: 0,
             nextFlex: 0,
             showBackButton: false,
+            globalFooter: SizedBox(
+              height: MediaQuery.of(context).size.height / 4,
+              width: MediaQuery.of(context).size.width / 2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.bottomToTop,
+                          alignment: Alignment.topCenter,
+                          child: TransparentBackgroundPage(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Sign up',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 16),
+                    ),
+                  ),
+                  Text(
+                    '|',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 16),
+                  ),
+                  Text(
+                    'Log in',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
             //rtl: true, // Display as right-to-left
-            back: const Icon(Icons.arrow_back),
-            skip: const Text('Skip',
-                style: TextStyle(fontWeight: FontWeight.w600)),
-            next: const Icon(Icons.arrow_forward),
-            done: const Text('Done',
-                style: TextStyle(fontWeight: FontWeight.w600)),
+            back: const SizedBox(),
+            skip: const SizedBox(),
+            next: const SizedBox(),
+            done: const SizedBox(),
 
             curve: Curves.fastLinearToSlowEaseIn,
-            controlsMargin: const EdgeInsets.all(16),
-            controlsPadding: kIsWeb
-                ? const EdgeInsets.all(12.0)
-                : const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
+            //controlsMargin: const EdgeInsets.all(16),
+            // controlsPadding: kIsWeb
+            //     ? const EdgeInsets.all(12.0)
+            //     : const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
             dotsDecorator: const DotsDecorator(
               size: Size(10.0, 10.0),
-              color: Color(0xFFBDBDBD),
+              activeColor: Colors.white,
+              color: Colors.white,
               activeSize: Size(22.0, 10.0),
               activeShape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(25.0)),
-              ),
-            ),
-            dotsContainerDecorator: const ShapeDecoration(
-              color: Colors.black87,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(8.0)),
               ),
             ),
           );

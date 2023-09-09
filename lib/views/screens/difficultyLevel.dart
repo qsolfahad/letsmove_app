@@ -51,7 +51,7 @@ class _DifficultyLevelsStepIndicatorState
                 ),
             ],
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Card(
             elevation: 4,
             margin: EdgeInsets.all(16),
@@ -59,25 +59,25 @@ class _DifficultyLevelsStepIndicatorState
               padding: EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Selected Difficulty Level',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(
                     difficultyLevels[currentStep].title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 24,
                       color: Colors.blue,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(
                     difficultyLevels[currentStep].description,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                     ),
                   ),

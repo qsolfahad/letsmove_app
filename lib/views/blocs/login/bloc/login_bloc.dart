@@ -12,7 +12,6 @@ String? sfName;
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitial()) {
 //calling function to get value by SharedPreferences
-    print('in');
     getStringValuesSF();
     on((event, emit) async {
       if (event is GetLogin) {
@@ -63,4 +62,13 @@ getStringValuesSF() async {
   print(sfEmail);
   sfPassword = prefs.getString('password').toString();
   UserInfoModel(email: sfEmail!, name: sfName!, phone: sfPassword!);
+}
+
+emptyStringValuesSF() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.clear();
+  sfEmail = null;
+  sfPassword = null;
+  sfPassword = null;
+  UserInfoModel(email: '', name: '', phone: '');
 }
