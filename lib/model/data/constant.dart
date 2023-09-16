@@ -76,3 +76,7 @@ final List<String> points = [
   'Reduce stress with mindfulness content',
   'Unlimited custom workout plans',
 ];
+enum Auth {
+  LOGIN,
+  SIGNUP
+}

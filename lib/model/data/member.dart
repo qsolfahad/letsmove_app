@@ -1,23 +1,19 @@
-class UserInfo {
+class MemberModel {
   final String id;
   final String name;
   final String email;
   final String sub;
 
-  UserInfo(
-      {required this.id,
-      required this.name,
-      required this.email,
-      required this.sub});
+  MemberModel({required this.id,required this.name, required this.email, required this.sub});
 
-  UserInfo copyWith({
+  MemberModel copyWith({
+    String? id,
     String? name,
     String? email,
     String? sub,
-    String? id,
   }) {
-    return UserInfo(
-        id: id ?? this.id,
+    return MemberModel(
+      id: id?? this.id,
         name: name ?? this.name,
         email: email ?? this.email,
         sub: sub ?? this.sub);

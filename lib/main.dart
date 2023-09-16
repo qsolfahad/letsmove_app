@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:letsmove_app/routes/routes_name.dart';
 import 'package:letsmove_app/routes/routes_page.dart';
+import 'package:letsmove_app/views/blocs/Auth/bloc/auth_bloc.dart';
 import 'package:letsmove_app/views/blocs/intro/bloc/intro_bloc.dart';
-import 'package:letsmove_app/views/blocs/login/bloc/login_bloc.dart';
-import 'package:letsmove_app/views/blocs/signup/bloc/signup_bloc.dart';
+import 'package:letsmove_app/views/blocs/members/bloc/member_bloc.dart';
+import 'package:letsmove_app/model/data/firebaseServices.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,8 +26,9 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider<IntroBloc>(
               create: (context) => IntroBloc(FirestoreService())),
-          BlocProvider<LoginBloc>(create: (context) => LoginBloc()),
-          BlocProvider<SignupBloc>(create: (context) => SignupBloc()),
+               BlocProvider<MemberBloc>(
+              create: (context) => MemberBloc(FirestoreService())),
+          BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -35,7 +38,7 @@ class MyApp extends StatelessWidget {
               bodyMedium: GoogleFonts.montserrat(),
             ),
             scaffoldBackgroundColor: Colors.white,
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.grey,
           ),
           onGenerateRoute: RoutePage.allRoutes,
           initialRoute: intro,

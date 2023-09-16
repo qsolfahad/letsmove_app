@@ -43,7 +43,8 @@ dependencies:
   firebase_auth: ^4.9.0
   firebase_core: ^2.15.1
   pay: ^1.1.2
-
+  flutter_openmoney:
+  fluttertoast:
 
 dev_dependencies:
   flutter_test:
