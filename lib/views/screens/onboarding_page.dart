@@ -5,7 +5,7 @@ import '../../model/data/onboarding.dart';
 class OnboardingPage extends StatelessWidget {
   final OnboardingData data;
 
-  OnboardingPage({required this.data});
+  const OnboardingPage({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class OnboardingPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'Virtuagym',
                 style: TextStyle(
                   color: Colors.white,
@@ -37,20 +37,20 @@ class OnboardingPage extends StatelessWidget {
               ),
               Text(
                 data.title,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 48.0),
                 child: Text(
                   data.description,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,
                   ),

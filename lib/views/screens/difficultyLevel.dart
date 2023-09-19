@@ -15,6 +15,8 @@ final List<DifficultyLevel> difficultyLevels = [
 ];
 
 class DifficultyLevelsStepIndicator extends StatefulWidget {
+  const DifficultyLevelsStepIndicator({super.key});
+
   @override
   _DifficultyLevelsStepIndicatorState createState() =>
       _DifficultyLevelsStepIndicatorState();
@@ -54,9 +56,9 @@ class _DifficultyLevelsStepIndicatorState
           const SizedBox(height: 16),
           Card(
             elevation: 4,
-            margin: EdgeInsets.all(16),
+            margin: const EdgeInsets.all(16),
             child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
                   const Text(

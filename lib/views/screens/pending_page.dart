@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../routes/routes_name.dart';
 import '../blocs/Auth/bloc/auth_bloc.dart';
@@ -18,16 +16,16 @@ class _PendingPageState extends State<PendingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Column(children: [
           ListTile(
-              title: Text(
+              title: const Text(
                 // 'Hi ' + sfName.toString() + ',',
                 '',
 
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
-              subtitle: Text(
+              subtitle: const Text(
                 'Your weekly goals',
                 style: TextStyle(color: Colors.grey, fontSize: 12),
               ),
@@ -37,15 +35,15 @@ class _PendingPageState extends State<PendingPage> {
                   Navigator.pushNamedAndRemoveUntil(
                       context, intro, (route) => false);
                 },
-                child: Text(
+                child: const Text(
                   'Logout',
                   style: TextStyle(color: Colors.redAccent),
                 ),
               )),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
-          Text(
+          const Text(
             "Your Request is in panding please deposit your cash to become member.",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 18),

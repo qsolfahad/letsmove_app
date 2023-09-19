@@ -1,16 +1,9 @@
-import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../global.dart';
 import '../../routes/routes_name.dart';
 import '../blocs/Auth/bloc/auth_bloc.dart';
-import 'package:http/http.dart' as http;
-
-import '../blocs/members/bloc/member_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,8 +17,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     Future.delayed(const Duration(milliseconds: 0), () async {
       BlocProvider.of<AuthBloc>(context).add(LoadUserDetail());
-      BlocProvider.of<MemberBloc>(context).add(LoadMemberData());
-
+     
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool? isMember = prefs.getBool('isMember');
 
@@ -38,10 +30,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    int _currentIndex = 0;
+    int currentIndex = 0;
     void _onItemTapped(int index) async {
       setState(() {
-        _currentIndex = index;
+        currentIndex = index;
       });
       if (index == 0) {
         Navigator.pushNamedAndRemoveUntil(context, home, (route) => false);
@@ -53,7 +45,7 @@ class _HomePageState extends State<HomePage> {
 
     void _onItemTappedAdmin(int index) async {
       setState(() {
-        _currentIndex = index;
+        currentIndex = index;
       });
       if (index == 0) {
         Navigator.pushNamedAndRemoveUntil(context, home, (route) => false);
@@ -77,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                   backgroundColor: Colors.orange,
                   flexibleSpace: FlexibleSpaceBar(
                     background: Center(
-                        child: Text('Hello there ' + state.name.toString())),
+                        child: Text('Hello there ${state.name}')),
                   ),
                 ),
                 SliverGrid(
@@ -99,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ]),
               bottomNavigationBar: BottomNavigationBar(
-                currentIndex: _currentIndex,
+                currentIndex: currentIndex,
                 type: BottomNavigationBarType
                     .fixed, // Set to fixed if you have more than 3 items
                 selectedItemColor: Colors.blue,
@@ -108,23 +100,23 @@ class _HomePageState extends State<HomePage> {
                     ? _onItemTappedAdmin
                     : _onItemTapped,
                 items: [
-                  BottomNavigationBarItem(
+                  const BottomNavigationBarItem(
                     icon: Icon(Icons.home),
                     label: 'Home',
                   ),
                   if (state.isAdmin == true)
-                    BottomNavigationBarItem(
+                    const BottomNavigationBarItem(
                       icon: Icon(Icons.card_membership),
                       label: 'Members',
                     ),
-                  BottomNavigationBarItem(
+                  const BottomNavigationBarItem(
                     icon: Icon(Icons.logout),
                     label: 'logout',
                   ),
                 ],
               ),
             )
-          : Scaffold(
+          : const Scaffold(
               body: Center(child: CircularProgressIndicator()),
             );
     });

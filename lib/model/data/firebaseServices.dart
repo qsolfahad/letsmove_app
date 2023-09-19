@@ -9,24 +9,40 @@ import 'package:http/http.dart' as http;
 class FirestoreService {
   final FirebaseFirestore _firebaseCollection = FirebaseFirestore.instance;
 
-  Stream<List<MemberModel>> getMembers() {
-    
-    return _firebaseCollection
-        .collection('UsersData')
-        .where('isPending', isEqualTo: true)
-        .snapshots(includeMetadataChanges: true)
-        .map((snapshot) {
-      return snapshot.docs.map((doc) {
-        Map<String, dynamic> data = doc.data();
-        print(data['name']);
-        return MemberModel(
-            id: doc.id,
-            name: data['name'],
-            email: data['email'],
-            sub: data['subscription'].toString());
-      }).toList();
-    });
-  }
+  // Stream<List<MemberModel>> getMembers() {
+  //   return _firebaseCollection
+  //       .collection('UsersData')
+  //       .where('isPending', isEqualTo: true)
+  //       .snapshots(includeMetadataChanges: true)
+  //       .map((snapshot) {
+  //     return snapshot.docs.map((doc) {
+  //       Map<String, dynamic> data = doc.data();
+  //       print(data['name']);
+  //       return MemberModel(
+  //           id: doc.id,
+  //           name: data['name'],
+  //           email: data['email'],
+  //           sub: data['subscription'].toString());
+  //     }).toList();
+  //   });
+  // }
+Future<List<MemberModel>> getMembers() async {
+  final snapshot = await _firebaseCollection
+      .collection('UsersData')
+      .where('isPending', isEqualTo: true)
+      .get();
+
+  return snapshot.docs.map((doc) {
+    Map<String, dynamic> data = doc.data();
+    print(data['name']);
+    return MemberModel(
+      id: doc.id,
+      name: data['name'],
+      email: data['email'],
+      sub: data['subscription'].toString(),
+    );
+  }).toList();
+}
 
   setUser(GetSignup event) {
     _firebaseCollection.collection('UsersData').add({
@@ -95,7 +111,7 @@ class FirestoreService {
             .post(url,
                 headers: {
                   'content-Type': 'application/json',
-                  'Authorization':authToken
+                  'Authorization': authToken
                 },
                 body: jsonEncode({
                   'priority': 'high',

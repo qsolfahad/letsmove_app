@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CardList extends StatefulWidget {
   final List<Map> items;
 
-  CardList({required this.items});
+  const CardList({super.key, required this.items});
 
   @override
   State<CardList> createState() => _CardListState();
@@ -30,7 +30,7 @@ class _CardListState extends State<CardList> {
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: ListTile(
-              contentPadding: EdgeInsets.all(16.0),
+              contentPadding: const EdgeInsets.all(16.0),
               title: Text(
                 'Lose Weight $index',
                 style: TextStyle(

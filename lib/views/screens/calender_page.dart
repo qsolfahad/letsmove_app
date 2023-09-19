@@ -36,18 +36,18 @@ class _CalenderPageState extends State<CalenderPage> {
       builder: (context, state) {
         return Scaffold(
           body: Container(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: Column(
               children: [
                 ListTile(
-                    title: Text(
+                    title: const Text(
                       // 'Hi ' + sfName.toString() + ',',
                       '',
 
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text(
+                    subtitle: const Text(
                       'Your weekly goals',
                       style: TextStyle(color: Colors.grey, fontSize: 12),
                     ),
@@ -57,12 +57,12 @@ class _CalenderPageState extends State<CalenderPage> {
                         Navigator.pushNamedAndRemoveUntil(
                             context, intro, (route) => false);
                       },
-                      child: Text(
+                      child: const Text(
                         'Logout',
                         style: TextStyle(color: Colors.redAccent),
                       ),
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 Row(
@@ -71,7 +71,7 @@ class _CalenderPageState extends State<CalenderPage> {
                         width: MediaQuery.of(context).size.width / 3 - 11,
                         height: 200, // Set the width of your card
                         padding:
-                            EdgeInsets.all(16), // Add padding inside the card
+                            const EdgeInsets.all(16), // Add padding inside the card
                         decoration: BoxDecoration(
                           borderRadius:
                               BorderRadius.circular(10), // Add rounded corners
@@ -80,7 +80,7 @@ class _CalenderPageState extends State<CalenderPage> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 2,
                               blurRadius: 10,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ], // Add shadow for a raised effect
                           color: Colors
@@ -88,7 +88,7 @@ class _CalenderPageState extends State<CalenderPage> {
                         ),
                         child: Column(
                           children: [
-                            Container(
+                            SizedBox(
                               width: 100,
                               height: 100,
                               child: CustomPaint(
@@ -97,34 +97,34 @@ class _CalenderPageState extends State<CalenderPage> {
                                       .shade300, // Grey shade color for the ring
                                   thickness: 10, // Ring thickness
                                 ),
-                                child: Center(
+                                child: const Center(
                                     child: Icon(
                                   Icons.health_and_safety,
                                   color: Colors.redAccent,
                                 )),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 16,
                             ),
-                            Text(
+                            const Text(
                               'Steps',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            Text(
+                            const Text(
                               '7 X 10,000',
                               style: TextStyle(color: Colors.grey),
                             ),
                           ],
                         )),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     Container(
                         width: MediaQuery.of(context).size.width / 3 - 11,
                         height: 200, // Set the width of your card
                         padding:
-                            EdgeInsets.all(16), // Add padding inside the card
+                            const EdgeInsets.all(16), // Add padding inside the card
                         decoration: BoxDecoration(
                           borderRadius:
                               BorderRadius.circular(10), // Add rounded corners
@@ -133,7 +133,7 @@ class _CalenderPageState extends State<CalenderPage> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 2,
                               blurRadius: 10,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ], // Add shadow for a raised effect
                           color: Colors
@@ -141,7 +141,7 @@ class _CalenderPageState extends State<CalenderPage> {
                         ),
                         child: Column(
                           children: [
-                            Container(
+                            SizedBox(
                               width: 100,
                               height: 100,
                               child: CustomPaint(
@@ -150,34 +150,34 @@ class _CalenderPageState extends State<CalenderPage> {
                                       .shade300, // Grey shade color for the ring
                                   thickness: 10, // Ring thickness
                                 ),
-                                child: Center(
+                                child: const Center(
                                     child: Icon(
                                   Icons.health_and_safety,
                                   color: Colors.redAccent,
                                 )),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 16,
                             ),
-                            Text(
+                            const Text(
                               'Cardio',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            Text(
+                            const Text(
                               '3 X 20 min',
                               style: TextStyle(color: Colors.grey),
                             ),
                           ],
                         )),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     Container(
                         width: MediaQuery.of(context).size.width / 3 - 11,
                         height: 200, // Set the width of your card
                         padding:
-                            EdgeInsets.all(16), // Add padding inside the card
+                            const EdgeInsets.all(16), // Add padding inside the card
                         decoration: BoxDecoration(
                           borderRadius:
                               BorderRadius.circular(10), // Add rounded corners
@@ -186,7 +186,7 @@ class _CalenderPageState extends State<CalenderPage> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 2,
                               blurRadius: 10,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ], // Add shadow for a raised effect
                           color: Colors
@@ -194,7 +194,7 @@ class _CalenderPageState extends State<CalenderPage> {
                         ),
                         child: Column(
                           children: [
-                            Container(
+                            SizedBox(
                               width: 100,
                               height: 100,
                               child: CustomPaint(
@@ -203,19 +203,19 @@ class _CalenderPageState extends State<CalenderPage> {
                                         .shade300, // Grey shade color for the ring
                                     thickness: 10, // Ring thickness
                                   ),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.health_and_safety,
                                     color: Colors.redAccent,
                                   )),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 16,
                             ),
-                            Text(
+                            const Text(
                               'Strength',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            Text(
+                            const Text(
                               '2 X 8 sets',
                               style: TextStyle(color: Colors.grey),
                             ),
@@ -223,15 +223,15 @@ class _CalenderPageState extends State<CalenderPage> {
                         )),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 11,
                 ),
-                Text(
+                const Text(
                   "Sorry, you can't see your dashboard until you become a member.",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 18),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 if (state is GetUserDetails)
@@ -244,14 +244,14 @@ class _CalenderPageState extends State<CalenderPage> {
                         backgroundColor: Colors.blue,
 
                         elevation: 3, // Elevation of the button
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10), // Button padding
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(20), // Button border radius
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Click Me to become Member',
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),

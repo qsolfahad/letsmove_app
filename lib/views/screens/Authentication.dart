@@ -9,7 +9,7 @@ import '../blocs/Auth/bloc/auth_bloc.dart';
 
 class AuthenticationPage extends StatefulWidget {
   Auth auth;
-  AuthenticationPage(this.auth);
+  AuthenticationPage(this.auth, {super.key});
   @override
   State<AuthenticationPage> createState() => _AuthenticationPageState();
 }
@@ -23,8 +23,8 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
       context: cntxt,
       builder: (ctx) => AlertDialog(
         title: (widget.auth == Auth.LOGIN)
-            ? Text("Error logging in")
-            : Text("Error Signing up"),
+            ? const Text("Error logging in")
+            : const Text("Error Signing up"),
         content:  Text(
             state.value.toString()),
         actions: <Widget>[
@@ -32,7 +32,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               onPressed: () {
                 Navigator.of(ctx).pop();
               },
-              child: Text("okay")),
+              child: const Text("okay")),
         ],
       ),
     );
@@ -43,9 +43,9 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     TextEditingController fullNameController = TextEditingController();
-    final _authBloc = AuthBloc();
+    final authBloc = AuthBloc();
     return BlocProvider(
-      create: (context) => _authBloc,
+      create: (context) => authBloc,
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is LoginValidation) {
@@ -73,26 +73,26 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         builder: (context, state) => Scaffold(
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               height: MediaQuery.of(context).size.height,
               child: Stack(
                 children: <Widget>[
-                  new ClipRect(
-                    child: new BackdropFilter(
+                  ClipRect(
+                    child: BackdropFilter(
                         filter:
-                            new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                        child: new Container(
-                            decoration: new BoxDecoration(
+                            ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                        child: Container(
+                            decoration: BoxDecoration(
                                 color: Colors.grey.shade200.withOpacity(0.5)),
                             child: Padding(
-                              padding: EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(16),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Align(
                                     alignment: Alignment.topRight,
                                     child: IconButton(
-                                      icon: Icon(Icons.cancel),
+                                      icon: const Icon(Icons.cancel),
                                       onPressed: () =>
                                           Navigator.of(context).pop(),
                                     ),
@@ -106,24 +106,24 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                                       decoration: InputDecoration(
                                         labelText: 'Name',
                                         labelStyle:
-                                            TextStyle(color: Colors.black38),
+                                            const TextStyle(color: Colors.black38),
                                         hintText: 'Full name',
                                         focusedBorder: OutlineInputBorder(
                                           borderSide:
-                                              BorderSide(color: Colors.black38),
+                                              const BorderSide(color: Colors.black38),
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
                                         border: OutlineInputBorder(
                                           borderSide:
-                                              BorderSide(color: Colors.black38),
+                                              const BorderSide(color: Colors.black38),
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
                                       ),
                                     ),
                                   if (widget.auth == Auth.SIGNUP)
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 30,
                                     ),
                                   TextField(
@@ -134,21 +134,21 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                                     decoration: InputDecoration(
                                       labelText: 'Email',
                                       labelStyle:
-                                          TextStyle(color: Colors.black38),
+                                          const TextStyle(color: Colors.black38),
                                       hintText: 'abc@company.com',
                                       focusedBorder: OutlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: Colors.black38),
+                                            const BorderSide(color: Colors.black38),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       border: OutlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: Colors.black38),
+                                            const BorderSide(color: Colors.black38),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 30,
                                   ),
                                   TextField(
@@ -159,30 +159,31 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                                     decoration: InputDecoration(
                                       labelText: 'Password',
                                       labelStyle:
-                                          TextStyle(color: Colors.black38),
+                                          const TextStyle(color: Colors.black38),
                                       hintText: '*******',
                                       focusedBorder: OutlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: Colors.black38),
+                                            const BorderSide(color: Colors.black38),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       border: OutlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: Colors.black38),
+                                            const BorderSide(color: Colors.black38),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
                                   ),
                                   if (state is LoginLoading)
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 30,
                                     ),
                                   if (state is LoginLoading)
-                                    CircularProgressIndicator(),
-                                  SizedBox(
+                                    const CircularProgressIndicator(),
+                                  const SizedBox(
                                     height: 30,
                                   ),
                                   SizedBox(
+                                    width: double.infinity,
                                     child: ElevatedButton(
                                       style: ButtonStyle(
                                         elevation:
@@ -200,12 +201,12 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                                       onPressed: () {
                                         setState(() {
                                           if (widget.auth == Auth.LOGIN) {
-                                            _authBloc.add(GetLogin(
+                                            authBloc.add(GetLogin(
                                               email: emailController.text,
                                               password: passwordController.text,
                                             ));
                                           } else {
-                                            _authBloc.add(GetSignup(
+                                            authBloc.add(GetSignup(
                                                 email: emailController.text,
                                                 fullname:
                                                     fullNameController.text,
@@ -218,7 +219,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                                         });
                                       },
                                       child: Container(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                           horizontal: 20,
                                           vertical: 15,
                                         ),
@@ -226,20 +227,19 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                                           (widget.auth == Auth.LOGIN)
                                               ? 'Log in'
                                               : 'Sign up',
-                                          style: TextStyle(fontSize: 18),
+                                          style: const TextStyle(fontSize: 18),
                                         ),
                                       ),
                                     ),
-                                    width: double.infinity,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20,
                                   ),
-                                  Text(
+                                  const Text(
                                     'By using this app you agree to the:',
                                     style: TextStyle(color: Colors.black38),
                                   ),
-                                  Center(
+                                  const Center(
                                     child: Text(
                                       'Virtuagym Privacy Statement - Virtuagym Terms & Conditions',
                                       style: TextStyle(

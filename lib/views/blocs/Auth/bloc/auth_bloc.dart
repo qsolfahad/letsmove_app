@@ -3,11 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:letsmove_app/model/data/firebaseServices.dart';
-import 'package:letsmove_app/model/data/userInfo.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../../global.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -134,23 +131,23 @@ _getLogin(GetLogin event, Emitter emit) async {
       bool isPending = false;
       bool isAdmin = false;
       checkUser.then((querySnapshot) async {
-        isAuthenticated = querySnapshot.docs.isNotEmpty;
+        isAuthenticated = true;
         print(isAuthenticated);
-        querySnapshot.docs.forEach((element) {
+        for (var element in querySnapshot.docs) {
           name = element.data()['name'];
           isMember = element.data()['isMemberShipAllow'];
           sub = element.data()['subscription'];
           isPending = element.data()['isPending'];
           isAdmin = element.data()['isAdmin'];
-        });
+        }
         setUserValuesSF(event, querySnapshot.docs.first.id, name, isMember, sub,
             isPending, isAdmin);
       }).catchError((error) {
         print(error);
         isAuthenticated = false;
       });
-      await Future.delayed(const Duration(seconds: 3), () async {
-        print('delay check'+isAuthenticated.toString());
+      await Future.delayed(const Duration(seconds: 8), () async {
+        print('delay check$isAuthenticated');
         if (isAuthenticated) {
           emit(LoginLoaded());
           print('emiited');

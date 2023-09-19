@@ -15,8 +15,7 @@ class MemberList extends StatefulWidget {
 class _MemberListState extends State<MemberList> {
   @override
   void initState() {
-    print('in member');
-   // BlocProvider.of<MemberBloc>(context).add(LoadMemberData());
+    BlocProvider.of<MemberBloc>(context).add(LoadMemberData());
     super.initState();
   }
 
@@ -45,17 +44,17 @@ class _MemberListState extends State<MemberList> {
                 child: CircularProgressIndicator()); // Loading indicator
           } else if (state is MemberLoaded) {
             final data = state.data;
-            return (data.length != 0)
+            return (data.isNotEmpty)
                 ? ListView.builder(
                     itemCount: data.length,
                     itemBuilder: (context, index) {
                       final member = data[index];
                       return Card(
                           elevation: 3, // Card elevation
-                          margin: EdgeInsets.symmetric(
+                          margin: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20), // Card margin
                           child: ListTile(
-                            leading: Icon(Icons
+                            leading: const Icon(Icons
                                 .person), // Icon on the left side of the card
                             title: Text(member.name), // Member's name
                             subtitle: Text(member.sub), // Member's email
@@ -63,7 +62,7 @@ class _MemberListState extends State<MemberList> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 IconButton(
-                                  icon: Icon(Icons.add),
+                                  icon: const Icon(Icons.add),
                                   color: Colors.green,
                                   onPressed: () {
                                     BlocProvider.of<MemberBloc>(context)
@@ -71,7 +70,7 @@ class _MemberListState extends State<MemberList> {
                                   },
                                 ),
                                 IconButton(
-                                  icon: Icon(Icons.delete),
+                                  icon: const Icon(Icons.delete),
                                   color: Colors.red,
                                   onPressed: () {
                                     BlocProvider.of<MemberBloc>(context)
@@ -83,11 +82,11 @@ class _MemberListState extends State<MemberList> {
                           ));
                     },
                   )
-                : Center(
+                : const Center(
                     child: Text('There is no pending approvers remaining'),
                   );
           }
-          return SizedBox();
+          return const SizedBox();
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -97,7 +96,7 @@ class _MemberListState extends State<MemberList> {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',

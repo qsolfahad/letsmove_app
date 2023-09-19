@@ -10,7 +10,7 @@ void showSubscriptionDialog(BuildContext context, GetUserDetails state) {
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: Text('Choose a Subscription'),
+        title: const Text('Choose a Subscription'),
         children: <Widget>[
           SimpleDialogOption(
             onPressed: () {
@@ -18,7 +18,7 @@ void showSubscriptionDialog(BuildContext context, GetUserDetails state) {
               BlocProvider.of<AuthBloc>(context).add(UpdateMember(state.id!,text));
               Navigator.pop(context, text);
             },
-            child: Text('1 Month Subscription: \$300'),
+            child: const Text('1 Month Subscription: \$300'),
           ),
           SimpleDialogOption(
             onPressed: () {
@@ -26,7 +26,7 @@ void showSubscriptionDialog(BuildContext context, GetUserDetails state) {
               BlocProvider.of<AuthBloc>(context).add(UpdateMember(state.id!,text));
               Navigator.pop(context, text);
             },
-            child: Text('1 Year Subscription: \$600'),
+            child: const Text('1 Year Subscription: \$600'),
           ),
           SimpleDialogOption(
             onPressed: () {
@@ -34,7 +34,7 @@ void showSubscriptionDialog(BuildContext context, GetUserDetails state) {
               BlocProvider.of<AuthBloc>(context).add(UpdateMember(state.id!,text));
               Navigator.pop(context, text);
             },
-            child: Text('Lifetime Subscription: \$1500'),
+            child: const Text('Lifetime Subscription: \$1500'),
           ),
         ],
       );

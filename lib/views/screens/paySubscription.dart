@@ -50,7 +50,7 @@ class _SubscriptionState extends State<Subscription> {
                   itemCount: points.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      leading: Icon(
+                      leading: const Icon(
                         Icons.check_circle,
                         color: Colors.green,
                       ),
@@ -85,7 +85,7 @@ class _SubscriptionState extends State<Subscription> {
                         type: GooglePayButtonType.pay,
                         margin: const EdgeInsets.only(top: 15.0),
                         onPaymentResult: (s) {
-                          print('My result' + s.toString());
+                          print('My result$s');
                           showSubscriptionDialog(context, state);
                         },
                         loadingIndicator: const Center(
@@ -94,7 +94,7 @@ class _SubscriptionState extends State<Subscription> {
                       ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               if (state is GetUserDetails)
@@ -107,14 +107,14 @@ class _SubscriptionState extends State<Subscription> {
                       backgroundColor: Colors.blue,
 
                       elevation: 3, // Elevation of the button
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10), // Button padding
                       shape: RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.circular(20), // Button border radius
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Click Me to become Member',
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),

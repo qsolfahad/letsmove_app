@@ -4,10 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:letsmove_app/routes/routes_name.dart';
 import 'package:letsmove_app/routes/routes_page.dart';
-import 'package:letsmove_app/views/blocs/Auth/bloc/auth_bloc.dart';
-import 'package:letsmove_app/views/blocs/intro/bloc/intro_bloc.dart';
-import 'package:letsmove_app/views/blocs/members/bloc/member_bloc.dart';
-import 'package:letsmove_app/model/data/firebaseServices.dart';
 import 'package:letsmove_app/views/screens/bloc_provider.dart';
 
 

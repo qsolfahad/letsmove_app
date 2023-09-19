@@ -12,19 +12,19 @@ class MemberBloc extends Bloc<MemberEvent, MemberState> {
   MemberBloc(this._firestoreService) : super(MemberInitial()) {
     on<LoadMemberData>((event, emit) async {
       emit(MemberStateLoading());
-      final todos = await _firestoreService.getMembers().first;
+      final todos = await _firestoreService.getMembers();
       emit(MemberLoaded(todos));
     });
     on<AddMember>((event, emit) async {
       emit(MemberStateLoading());
       await _firestoreService.addMember(event.id);
-      final todos = await _firestoreService.getMembers().first;
+      final todos = await _firestoreService.getMembers();
       emit(MemberLoaded(todos));
     });
     on<RemoveMember>((event, emit) async {
       emit(MemberStateLoading());
       await _firestoreService.removeMember(event.id);
-      final todos = await _firestoreService.getMembers().first;
+      final todos = await _firestoreService.getMembers();
       emit(MemberLoaded(todos));
     });
   }

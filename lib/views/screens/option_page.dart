@@ -20,13 +20,14 @@ class OptionPage extends StatefulWidget {
 
 class _OptionPageState extends State<OptionPage> {
  
+  @override
   void initState() {
     Future.delayed(const Duration(milliseconds: 0), () async {
       BlocProvider.of<AuthBloc>(context).add(LoadUserDetail());
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool? isPending = prefs.getBool('isPending');
       bool? isMember = prefs.getBool('isMember');
-      print('my' + isPending.toString());
+      print('my$isPending');
       if (isPending == true && isPending != null) {
         Navigator.pushNamedAndRemoveUntil(context, pending, (route) => false);
       } else {
@@ -47,13 +48,13 @@ class _OptionPageState extends State<OptionPage> {
               items: List.generate(
                   6,
                   (index) => {
-                        'data' + index.toString(): 'Item is ' + index.toString()
+                        'data$index': 'Item is $index'
                       })),
         ))),
 
     PageViewModel(
       title: "What is your fitness level?",
-      bodyWidget: DifficultyLevelsStepIndicator(),
+      bodyWidget: const DifficultyLevelsStepIndicator(),
       //   image: Center(child: Icon(Icons.cake)),
     ),
     PageViewModel(
@@ -69,12 +70,13 @@ class _OptionPageState extends State<OptionPage> {
           body: IntroductionScreen(
             pages: pages,
             onDone: () {
-              if (state is GetUserDetails) if (state.isMember == true)
+              if (state is GetUserDetails) if (state.isMember == true) {
                 Navigator.pushNamedAndRemoveUntil(
                     context, home, (route) => false);
-              else
+              } else {
                 Navigator.pushNamedAndRemoveUntil(
                     context, calender, (route) => false);
+              }
             },
             onSkip: () {},
             showNextButton: true,

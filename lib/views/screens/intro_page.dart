@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:letsmove_app/model/data/constant.dart';
-import 'package:letsmove_app/model/data/onboarding.dart';
-import 'package:letsmove_app/views/blocs/Auth/bloc/auth_bloc.dart';
 import 'package:letsmove_app/views/screens/Authentication.dart';
-import 'package:letsmove_app/views/screens/onboarding_page.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,7 +12,7 @@ import '../../routes/routes_name.dart';
 import '../blocs/intro/bloc/intro_bloc.dart';
 
 class IntroPage extends StatefulWidget {
-  IntroPage({super.key});
+  const IntroPage({super.key});
 
   @override
   State<IntroPage> createState() => _IntroPageState();
@@ -23,7 +20,7 @@ class IntroPage extends StatefulWidget {
 
 class _IntroPageState extends State<IntroPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   Timer? _timer;
 
   @override
@@ -33,6 +30,7 @@ class _IntroPageState extends State<IntroPage> {
       String? login = prefs.getString('id');
 
       if (login != 'null' && login != null) {
+        // ignore: use_build_context_synchronously
         Navigator.pushNamedAndRemoveUntil(context, home, (route) => false);
       }
     });
@@ -52,12 +50,12 @@ class _IntroPageState extends State<IntroPage> {
 
   void _startAutoScroll() {
     // Set up a timer to automatically scroll pages
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       int index = BlocProvider.of<IntroBloc>(context).state.counter;
       if (index < introClass.length - 1) {
         // Scroll to the next page if not at the last page
         _pageController.nextPage(
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
           curve: Curves.easeOutSine,
         );
       } else {
@@ -119,7 +117,7 @@ class _IntroPageState extends State<IntroPage> {
                                 ),
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               'Sign up',
                               style: TextStyle(
                                   color: Colors.white,
@@ -127,7 +125,7 @@ class _IntroPageState extends State<IntroPage> {
                                   fontSize: 16),
                             ),
                           ),
-                          Text(
+                        const  Text(
                             '|',
                             style: TextStyle(
                                 color: Colors.white,
@@ -145,7 +143,7 @@ class _IntroPageState extends State<IntroPage> {
                                 ),
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               'Log in',
                               style: TextStyle(
                                   color: Colors.white,
@@ -172,13 +170,13 @@ class _IntroPageState extends State<IntroPage> {
 
   Widget _indicator(bool isActive) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 150),
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      duration: const Duration(milliseconds: 150),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
       height: 8.0,
       width: isActive ? 24.0 : 8.0,
       decoration: BoxDecoration(
         color: isActive ? Colors.white : Colors.grey,
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
     );
   }

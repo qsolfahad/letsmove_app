@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:letsmove_app/model/data/intro.dart';
-import 'package:letsmove_app/model/data/firebaseServices.dart';
 
 part 'intro_event.dart';
 part 'intro_state.dart';
