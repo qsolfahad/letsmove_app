@@ -8,6 +8,7 @@ import 'package:letsmove_app/views/blocs/Auth/bloc/auth_bloc.dart';
 import 'package:letsmove_app/views/blocs/intro/bloc/intro_bloc.dart';
 import 'package:letsmove_app/views/blocs/members/bloc/member_bloc.dart';
 import 'package:letsmove_app/model/data/firebaseServices.dart';
+import 'package:letsmove_app/views/screens/bloc_provider.dart';
 
 
 void main() async {
@@ -23,13 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider<IntroBloc>(
-              create: (context) => IntroBloc(FirestoreService())),
-               BlocProvider<MemberBloc>(
-              create: (context) => MemberBloc(FirestoreService())),
-          BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
-        ],
+        providers: AppBlocProvider.allBlocProviders,
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Membership Management',

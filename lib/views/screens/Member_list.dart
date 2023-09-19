@@ -15,7 +15,8 @@ class MemberList extends StatefulWidget {
 class _MemberListState extends State<MemberList> {
   @override
   void initState() {
-    BlocProvider.of<MemberBloc>(context).add(LoadMemberData());
+    print('in member');
+   // BlocProvider.of<MemberBloc>(context).add(LoadMemberData());
     super.initState();
   }
 

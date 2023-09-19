@@ -19,10 +19,10 @@ class OptionPage extends StatefulWidget {
 }
 
 class _OptionPageState extends State<OptionPage> {
+ 
   void initState() {
     Future.delayed(const Duration(milliseconds: 0), () async {
       BlocProvider.of<AuthBloc>(context).add(LoadUserDetail());
-
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool? isPending = prefs.getBool('isPending');
       bool? isMember = prefs.getBool('isMember');
@@ -30,7 +30,7 @@ class _OptionPageState extends State<OptionPage> {
       if (isPending == true && isPending != null) {
         Navigator.pushNamedAndRemoveUntil(context, pending, (route) => false);
       } else {
-        if(isMember == true && isPending != null){
+        if (isMember == true && isPending != null) {
           Navigator.pushNamedAndRemoveUntil(context, home, (route) => false);
         }
       }

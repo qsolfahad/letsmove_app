@@ -1,3 +1,6 @@
+import '../../views/screens/onboarding_page.dart';
+import 'onboarding.dart';
+
 String applepay = '''{
   "provider": "apple_pay",
   "data": {
@@ -76,7 +79,36 @@ final List<String> points = [
   'Reduce stress with mindfulness content',
   'Unlimited custom workout plans',
 ];
-enum Auth {
-  LOGIN,
-  SIGNUP
-}
+
+enum Auth { LOGIN, SIGNUP }
+
+String authToken =
+    'key=AAAAVV-pyZ4:APA91bELWsE83_Sr2qxktwDgmtiBuj6Kthi0DO758Qx7bbrEyk1Hhr0qEYtJCQYs85X3f_0n0MptK36DoiPRxZS8XeeBJ8Jc97oHPEqQk5kvD6qmMvo2bgsv2ZzDtKQuGXsn_25owMTP';
+
+
+var introClass = [
+  OnboardingPage(
+    data: OnboardingData(
+      title: 'Personal Trainers',
+      description:
+          'Gets access to experienced personal trainers who will guide you on your fitness journey.',
+      image: 'assets/image/intro1.jpeg',
+    ),
+  ),
+  OnboardingPage(
+    data: OnboardingData(
+      title: 'Family-Friendly Environment',
+      description:
+          'Our gym is family-friendly, so you can work out while your kids enjoy our play area.',
+      image: 'assets/image/intro2.jpeg',
+    ),
+  ),
+  OnboardingPage(
+    data: OnboardingData(
+      title: 'Fitness Programs',
+      description:
+          'Explore a variety of fitness programs designed to help you achieve your fitness goals.',
+      image: 'assets/image/intro3.jpeg',
+    ),
+  ),
+];

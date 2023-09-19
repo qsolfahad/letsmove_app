@@ -14,16 +14,15 @@ class LoginLoading extends AuthState {}
 
 class LoginLoaded extends AuthState {}
 
-class LoginError extends AuthState {
-  String? error;
-  LoginError(this.error);
-}
+// ignore: must_be_immutable
 
+// ignore: must_be_immutable
 class SignupValidation extends AuthState {
   String? value;
   SignupValidation(this.value);
 }
 
+// ignore: must_be_immutable
 class GetUserDetails extends AuthState {
   String? id;
   String? email;
@@ -48,8 +47,8 @@ class GetUserDetails extends AuthState {
       String? name,
       String? sub,
       bool? isMember,
-      bool? isPending,bool? isAdmin
-      }) {
+      bool? isPending,
+      bool? isAdmin}) {
     return GetUserDetails(
         id: id ?? this.id,
         email: email ?? this.email,
@@ -64,8 +63,3 @@ class GetUserDetails extends AuthState {
 class SignupLoading extends AuthState {}
 
 class SignupLoaded extends AuthState {}
-
-class SignupError extends AuthState {
-  String? error;
-  SignupError(this.error);
-}

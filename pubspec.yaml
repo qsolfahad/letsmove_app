@@ -45,6 +45,9 @@ dependencies:
   pay: ^1.1.2
   flutter_openmoney:
   fluttertoast:
+  http:
+  firebase_messaging: ^14.6.7
+  firebase_analytics: ^10.4.5
 
 dev_dependencies:
   flutter_test:

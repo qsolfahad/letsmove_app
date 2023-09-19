@@ -32,7 +32,9 @@ class OnboardingPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 206),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 4,
+              ),
               Text(
                 data.title,
                 style: TextStyle(

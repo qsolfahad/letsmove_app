@@ -24,17 +24,14 @@ class IntroPage extends StatefulWidget {
 class _IntroPageState extends State<IntroPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
   PageController _pageController = PageController();
-  int _currentPage = 0;
   Timer? _timer;
 
   @override
   void initState() {
     Future.delayed(const Duration(milliseconds: 0), () async {
-      BlocProvider.of<IntroBloc>(context).add(LoadIntroData());
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? login = prefs.getString('id');
 
-      print('my' + login.toString());
       if (login != 'null' && login != null) {
         Navigator.pushNamedAndRemoveUntil(context, home, (route) => false);
       }
@@ -56,11 +53,12 @@ class _IntroPageState extends State<IntroPage> {
   void _startAutoScroll() {
     // Set up a timer to automatically scroll pages
     _timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      if (_currentPage < 2) {
+      int index = BlocProvider.of<IntroBloc>(context).state.counter;
+      if (index < introClass.length - 1) {
         // Scroll to the next page if not at the last page
         _pageController.nextPage(
-          duration: Duration(milliseconds: 500),
-          curve: Curves.ease,
+          duration: Duration(seconds: 3),
+          curve: Curves.easeOutSine,
         );
       } else {
         // Stop the timer when at the last page
@@ -75,116 +73,99 @@ class _IntroPageState extends State<IntroPage> {
         fontSize: 16.0, color: Colors.white, fontWeight: FontWeight.bold);
 
     return BlocBuilder<IntroBloc, IntroState>(builder: (context, state) {
-      if (state is IntroStateLoading) {
-        return const Center(
-            child: CircularProgressIndicator()); // Loading indicator
-      } else if (state is IntroLoaded) {
-        final data = state.data;
-        return Scaffold(
-          body: Stack(
-            children: [
-              PageView.builder(
-                controller: _pageController,
-                itemCount: data.length,
-                onPageChanged: (index) {
-                 setState(() {
-                    _currentPage = index;
-                  });
-                },
-                itemBuilder: (context, index) {
-                  final document = data[index];
-                  return OnboardingPage(
-                    data: OnboardingData(
-                      title: document.title,
-                      description: document.body,
-                      image: document.image,
-                    ),
-                  );
-                },
-              ),
-              Positioned(
-                top: MediaQuery.of(context).size.height * 0.8,
-                left: 16,
-                right: 16,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 24.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: _buildPageIndicator(data),
-                  ),
+      return Scaffold(
+        body: Stack(
+          children: [
+            PageView.builder(
+              controller: _pageController,
+              itemCount: introClass.length,
+              onPageChanged: (index) {
+                state.counter = index;
+                BlocProvider.of<IntroBloc>(context).add(CounterPage());
+              },
+              itemBuilder: (context, index) {
+                return introClass[index];
+              },
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.8,
+              left: 16,
+              right: 16,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 24.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: _buildPageIndicator(introClass, state),
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                    padding: const EdgeInsets.only(bottom: 24.0),
-                    child: SizedBox(
-                        // height: MediaQuery.of(context).size.height / 4,
-                        width: MediaQuery.of(context).size.width / 2,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    type: PageTransitionType.bottomToTop,
-                                    alignment: Alignment.topCenter,
-                                    child: AuthenticationPage(Auth.SIGNUP),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'Sign up',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 16),
-                              ),
-                            ),
-                            Text(
-                              '|',
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                  padding: const EdgeInsets.only(bottom: 24.0),
+                  child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 2,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.bottomToTop,
+                                  alignment: Alignment.topCenter,
+                                  child: AuthenticationPage(Auth.SIGNUP),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Sign up',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w900,
                                   fontSize: 16),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    type: PageTransitionType.bottomToTop,
-                                    alignment: Alignment.topCenter,
-                                    child: AuthenticationPage(Auth.LOGIN),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'Log in',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 16),
-                              ),
-                            )
-                          ],
-                        ))),
-              ),
-            ],
-          ),
-        );
-      } else {
-        return SizedBox();
-      }
+                          ),
+                          Text(
+                            '|',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.bottomToTop,
+                                  alignment: Alignment.topCenter,
+                                  child: AuthenticationPage(Auth.LOGIN),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Log in',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16),
+                            ),
+                          )
+                        ],
+                      ))),
+            ),
+          ],
+        ),
+      );
     });
   }
 
-  List<Widget> _buildPageIndicator(len) {
+  List<Widget> _buildPageIndicator(len, IntroState state) {
     List<Widget> indicators = [];
     for (int i = 0; i < len.length; i++) {
-      indicators.add(i == _currentPage ? _indicator(true) : _indicator(false));
+      indicators.add(i == state.counter ? _indicator(true) : _indicator(false));
     }
     return indicators;
   }

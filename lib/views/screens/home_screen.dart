@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../global.dart';
 import '../../routes/routes_name.dart';
 import '../blocs/Auth/bloc/auth_bloc.dart';
+import 'package:http/http.dart' as http;
+
+import '../blocs/members/bloc/member_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,6 +24,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     Future.delayed(const Duration(milliseconds: 0), () async {
       BlocProvider.of<AuthBloc>(context).add(LoadUserDetail());
+      BlocProvider.of<MemberBloc>(context).add(LoadMemberData());
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool? isMember = prefs.getBool('isMember');
@@ -62,6 +69,7 @@ class _HomePageState extends State<HomePage> {
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
       return (state is GetUserDetails)
           ? Scaffold(
+           
               body: CustomScrollView(slivers: [
                 SliverAppBar(
                   pinned: true,

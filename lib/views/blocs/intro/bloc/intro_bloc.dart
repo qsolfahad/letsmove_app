@@ -6,15 +6,11 @@ part 'intro_event.dart';
 part 'intro_state.dart';
 
 class IntroBloc extends Bloc<IntroEvent, IntroState> {
-  final FirestoreService _firestoreService;
-  IntroBloc(this._firestoreService) : super(IntroInitial()) {
-    on<LoadIntroData>((event, emit) async {
-      emit(IntroStateLoading());
-      final todos = await _firestoreService.getIntro().first;
-      emit(IntroLoaded(todos));
-    });
+  IntroBloc() : super(IntroState(counter: 0)) {
+  
     on<CounterPage>((event, emit) async {
       emit(IntroState(counter: state.counter));
+      
     });
   }
 }

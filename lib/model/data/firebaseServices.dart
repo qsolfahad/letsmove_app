@@ -1,34 +1,26 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:letsmove_app/model/data/constant.dart';
 import 'package:letsmove_app/model/data/member.dart';
-import 'package:letsmove_app/views/screens/paySubscription.dart';
-import 'intro.dart';
 import '../../views/blocs/Auth/bloc/auth_bloc.dart';
+import 'package:http/http.dart' as http;
 
 class FirestoreService {
   final FirebaseFirestore _firebaseCollection = FirebaseFirestore.instance;
 
-  Stream<List<IntroModel>> getIntro() {
-    return _firebaseCollection.collection('intro').snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) {
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        print(data['title']);
-        return IntroModel(
-            title: data['title'], body: data['body'], image: data['image']);
-      }).toList();
-    });
-  }
-
   Stream<List<MemberModel>> getMembers() {
+    
     return _firebaseCollection
         .collection('UsersData')
         .where('isPending', isEqualTo: true)
-        .snapshots()
+        .snapshots(includeMetadataChanges: true)
         .map((snapshot) {
       return snapshot.docs.map((doc) {
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        Map<String, dynamic> data = doc.data();
         print(data['name']);
         return MemberModel(
-          id: doc.id,
+            id: doc.id,
             name: data['name'],
             email: data['email'],
             sub: data['subscription'].toString());
@@ -68,6 +60,8 @@ class FirestoreService {
         .collection("UsersData")
         .doc(id)
         .update({'isPending': false, 'isMemberShipAllow': true});
+    _sendPushMessage("Membership has been Approved",
+        "You are successfully become a member", id);
   }
 
   removeMember(String id) {
@@ -75,5 +69,55 @@ class FirestoreService {
         .collection("UsersData")
         .doc(id)
         .update({'isPending': false});
+    _sendPushMessage(
+        "Membership has been Rejected", "You are not become a member", id);
+    Future.delayed(const Duration(seconds: 2), () async {
+      _deleteToken(id);
+    });
+  }
+
+  _deleteToken(id) async {
+    FirebaseFirestore.instance.collection('userToken').doc(id).delete();
+  }
+
+  _sendPushMessage(String title, String body, String id) {
+    _firebaseCollection
+        .collection("userToken")
+        .doc(id)
+        .get()
+        .then((value) async {
+      try {
+        String token = value.data()!['token'];
+        print(token);
+        Uri url = Uri.parse('https://fcm.googleapis.com/fcm/send');
+
+        await http
+            .post(url,
+                headers: {
+                  'content-Type': 'application/json',
+                  'Authorization':authToken
+                },
+                body: jsonEncode({
+                  'priority': 'high',
+                  'data': {
+                    'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+                    'status': 'done',
+                    'body': body,
+                    'title': title
+                  },
+                  'notification': {
+                    'title': title,
+                    'body': body,
+                    'android_channel_id': 'dbfood'
+                  },
+                  'to': token
+                }))
+            .whenComplete(() {
+          print('Message is send');
+        });
+      } catch (e) {
+        print(e);
+      }
+    });
   }
 }

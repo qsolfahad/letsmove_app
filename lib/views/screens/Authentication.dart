@@ -17,6 +17,7 @@ class AuthenticationPage extends StatefulWidget {
 class _AuthenticationPageState extends State<AuthenticationPage> {
   showDialogbox(
     cntxt,
+   state
   ) {
     showDialog(
       context: cntxt,
@@ -24,8 +25,8 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         title: (widget.auth == Auth.LOGIN)
             ? Text("Error logging in")
             : Text("Error Signing up"),
-        content: const Text(
-            "Could not log you in. Please check if you entered the correct email address and password."),
+        content:  Text(
+            state.value.toString()),
         actions: <Widget>[
           TextButton(
               onPressed: () {
@@ -49,7 +50,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         listener: (context, state) {
           if (state is LoginValidation) {
             Navigator.pop(context);
-            showDialogbox(context);
+            showDialogbox(context,state);
           }
 
           if (state is LoginLoaded) {
@@ -58,7 +59,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
           }
           if (state is SignupValidation) {
             Navigator.pop(context);
-            showDialogbox(context);
+            showDialogbox(context,state);
           }
           if (state is SignupLoading) {
             // You can add loading indicators or actions here
