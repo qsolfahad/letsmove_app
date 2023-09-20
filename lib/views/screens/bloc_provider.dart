@@ -7,11 +7,11 @@ import '../blocs/members/bloc/member_bloc.dart';
 
 class AppBlocProvider {
   static get allBlocProviders => [
-     BlocProvider<IntroBloc>(
-              create: (context) => IntroBloc()),
-               BlocProvider<MemberBloc>(
-              create: (context) => MemberBloc(FirestoreService())),
-          BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
-        
-  ];
+        BlocProvider<IntroBloc>(create: (context) => IntroBloc()),
+        BlocProvider<MemberBloc>(
+            create: (context) => MemberBloc(FirestoreService())),
+        BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc(),
+        ),
+      ];
 }

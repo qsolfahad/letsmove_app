@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:letsmove_app/model/data/firebaseServices.dart';
@@ -166,6 +167,10 @@ String validationLogin(GetLogin data) {
   if (data.email?.isEmpty == true) {
     return 'Please Enter Your Email-id';
   }
+  print('Validation' + EmailValidator.validate(data.email!).toString());
+  if (!EmailValidator.validate(data.email!)) {
+    return 'Please Enter a valid Email';
+  }
   if (data.password?.isEmpty == true) {
     return 'Please Enter Your Password';
   }
@@ -176,6 +181,9 @@ String validationLogin(GetLogin data) {
 String validationSignup(GetSignup data) {
   if (data.fullname?.isEmpty == true) {
     return 'Please Enter Your Fullname';
+  }
+  if (!EmailValidator.validate(data.email!)) {
+    return 'Please Enter a valid Email';
   }
   if (data.email?.isEmpty == true) {
     return 'Please Enter Your Email-id';

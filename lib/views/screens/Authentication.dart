@@ -15,18 +15,14 @@ class AuthenticationPage extends StatefulWidget {
 }
 
 class _AuthenticationPageState extends State<AuthenticationPage> {
-  showDialogbox(
-    cntxt,
-   state
-  ) {
+  showDialogbox(cntxt, state) {
     showDialog(
       context: cntxt,
       builder: (ctx) => AlertDialog(
         title: (widget.auth == Auth.LOGIN)
             ? const Text("Error logging in")
             : const Text("Error Signing up"),
-        content:  Text(
-            state.value.toString()),
+        content: Text(state.value.toString()),
         actions: <Widget>[
           TextButton(
               onPressed: () {
@@ -48,9 +44,10 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
       create: (context) => authBloc,
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
+          print('state');
           if (state is LoginValidation) {
             Navigator.pop(context);
-            showDialogbox(context,state);
+            showDialogbox(context, state);
           }
 
           if (state is LoginLoaded) {
@@ -59,7 +56,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
           }
           if (state is SignupValidation) {
             Navigator.pop(context);
-            showDialogbox(context,state);
+            showDialogbox(context, state);
           }
           if (state is SignupLoading) {
             // You can add loading indicators or actions here
@@ -79,8 +76,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 children: <Widget>[
                   ClipRect(
                     child: BackdropFilter(
-                        filter:
-                            ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                         child: Container(
                             decoration: BoxDecoration(
                                 color: Colors.grey.shade200.withOpacity(0.5)),
@@ -105,18 +101,18 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                                       controller: fullNameController,
                                       decoration: InputDecoration(
                                         labelText: 'Name',
-                                        labelStyle:
-                                            const TextStyle(color: Colors.black38),
+                                        labelStyle: const TextStyle(
+                                            color: Colors.black38),
                                         hintText: 'Full name',
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide:
-                                              const BorderSide(color: Colors.black38),
+                                          borderSide: const BorderSide(
+                                              color: Colors.black38),
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
                                         border: OutlineInputBorder(
-                                          borderSide:
-                                              const BorderSide(color: Colors.black38),
+                                          borderSide: const BorderSide(
+                                              color: Colors.black38),
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
@@ -133,17 +129,17 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                                     controller: emailController,
                                     decoration: InputDecoration(
                                       labelText: 'Email',
-                                      labelStyle:
-                                          const TextStyle(color: Colors.black38),
+                                      labelStyle: const TextStyle(
+                                          color: Colors.black38),
                                       hintText: 'abc@company.com',
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            const BorderSide(color: Colors.black38),
+                                        borderSide: const BorderSide(
+                                            color: Colors.black38),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       border: OutlineInputBorder(
-                                        borderSide:
-                                            const BorderSide(color: Colors.black38),
+                                        borderSide: const BorderSide(
+                                            color: Colors.black38),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -158,17 +154,17 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                                     controller: passwordController,
                                     decoration: InputDecoration(
                                       labelText: 'Password',
-                                      labelStyle:
-                                          const TextStyle(color: Colors.black38),
+                                      labelStyle: const TextStyle(
+                                          color: Colors.black38),
                                       hintText: '*******',
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            const BorderSide(color: Colors.black38),
+                                        borderSide: const BorderSide(
+                                            color: Colors.black38),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       border: OutlineInputBorder(
-                                        borderSide:
-                                            const BorderSide(color: Colors.black38),
+                                        borderSide: const BorderSide(
+                                            color: Colors.black38),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),

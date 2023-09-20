@@ -48,6 +48,8 @@ dependencies:
   http:
   firebase_messaging: ^14.6.7
   firebase_analytics: ^10.4.5
+  email_validator: ^2.1.17
+  
 
 dev_dependencies:
   flutter_test:
