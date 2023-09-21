@@ -85,7 +85,6 @@ enum Auth { LOGIN, SIGNUP }
 String authToken =
     'key=AAAAVV-pyZ4:APA91bELWsE83_Sr2qxktwDgmtiBuj6Kthi0DO758Qx7bbrEyk1Hhr0qEYtJCQYs85X3f_0n0MptK36DoiPRxZS8XeeBJ8Jc97oHPEqQk5kvD6qmMvo2bgsv2ZzDtKQuGXsn_25owMTP';
 
-
 var introClass = [
   OnboardingPage(
     data: OnboardingData(
@@ -111,4 +110,12 @@ var introClass = [
       image: 'assets/image/intro3.jpeg',
     ),
   ),
+];
+var cardOption = [
+  'Lose Weight',
+  'Build Muscle',
+  'Omprove Well-being',
+  'Improve Performance',
+  'Rehabilitation',
+  'Get Fit'
 ];

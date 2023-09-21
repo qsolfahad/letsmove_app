@@ -43,7 +43,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
     return BlocProvider(
       create: (context) => authBloc,
       child: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           print('state');
           if (state is LoginValidation) {
             Navigator.pop(context);
@@ -58,13 +58,19 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
             Navigator.pop(context);
             showDialogbox(context, state);
           }
-          if (state is SignupLoading) {
-            // You can add loading indicators or actions here
-          }
+
           if (state is SignupLoaded) {
             // If successfully created user, navigate to HomeScreen
-
-            Navigator.pop(context);
+            print(emailController.text);
+            authBloc.add(GetLogin(
+              email: emailController.text,
+              password: passwordController.text,
+            ));
+             await Future.delayed(const Duration(seconds: 2), () async {
+               Navigator.pushNamedAndRemoveUntil(
+                context, option, (route) => false);
+             });
+           
           }
         },
         builder: (context, state) => Scaffold(
@@ -174,6 +180,8 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                                       height: 30,
                                     ),
                                   if (state is LoginLoading)
+                                    const CircularProgressIndicator(),
+                                    if (state is SignupLoading)
                                     const CircularProgressIndicator(),
                                   const SizedBox(
                                     height: 30,

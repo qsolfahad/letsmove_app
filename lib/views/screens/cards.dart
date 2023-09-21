@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../model/data/constant.dart';
+
 class CardList extends StatefulWidget {
   final List<Map> items;
 
@@ -17,7 +19,7 @@ class _CardListState extends State<CardList> {
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,
           childAspectRatio: 3 / 2,
-          crossAxisSpacing: 20,
+          crossAxisSpacing: 1,
           mainAxisSpacing: 20),
       itemCount: widget.items.length,
       itemBuilder: (context, index) {
@@ -32,7 +34,7 @@ class _CardListState extends State<CardList> {
             child: ListTile(
               contentPadding: const EdgeInsets.all(16.0),
               title: Text(
-                'Lose Weight $index',
+                cardOption[index],
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,

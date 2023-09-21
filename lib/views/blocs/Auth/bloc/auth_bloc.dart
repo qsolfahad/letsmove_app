@@ -74,6 +74,7 @@ _getSignUp(GetSignup event, Emitter emit) async {
         print('set');
         FirestoreService().setUser(event);
         emit(SignupLoaded());
+        
       }).onError((error, stackTrace) {
         emit(SignupValidation(error.toString()));
       });
@@ -201,7 +202,7 @@ emptyStringValuesSF() async {
 }
 
 setUserValuesSF(
-    GetLogin event, String id, name, ismember, sub, isPending, isAdmin) async {
+    event, String id, name, ismember, sub, isPending, isAdmin) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool('isPending', isPending);
   prefs.setString('sub', sub);
