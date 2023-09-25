@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:letsmove_app/routes/routes_name.dart';
 import 'package:letsmove_app/routes/routes_page.dart';
-import 'package:letsmove_app/views/screens/bloc_provider.dart';
-
+import 'package:letsmove_app/provider/bloc_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

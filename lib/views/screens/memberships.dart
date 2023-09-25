@@ -2,20 +2,19 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 //import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../routes/routes_name.dart';
+import '../../model/data/constant.dart';
 import '../blocs/members/bloc/member_bloc.dart';
-import 'constants.dart';
-import 'latest_orders.dart';
-import 'location_slider.dart';
 
 class Memberships extends StatefulWidget {
+  const Memberships({super.key});
+
   @override
   _MembershipsState createState() => _MembershipsState();
 }
 
 class _MembershipsState extends State<Memberships> {
+  @override
   void initState() {
     BlocProvider.of<MemberBloc>(context).add(LoadMemberData());
     super.initState();
@@ -35,12 +34,14 @@ class _MembershipsState extends State<Memberships> {
               Icon(
                 Icons.local_activity,
                 size: 30.0,
-                color: activeIndex == 0 ? Colors.white : Color(0xFFC8C9CB),
+                color:
+                    activeIndex == 0 ? Colors.white : const Color(0xFFC8C9CB),
               ),
               Icon(
                 Icons.credit_card,
                 size: 30.0,
-                color: activeIndex == 1 ? Colors.white : Color(0xFFC8C9CB),
+                color:
+                    activeIndex == 1 ? Colors.white : const Color(0xFFC8C9CB),
               ),
             ],
             onTap: (index) {
@@ -70,11 +71,11 @@ class _MembershipsState extends State<Memberships> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: kToolbarHeight,
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 16.0,
                         ),
                         child: Column(
@@ -86,54 +87,29 @@ class _MembershipsState extends State<Memberships> {
                                 Navigator.pop(context);
                               },
                               child: IconButton(
-                                icon: FaIcon(
+                                icon: const FaIcon(
                                   FontAwesomeIcons.arrowLeft,
                                   color: Colors.white,
                                   size: 20,
                                 ),
                                 color: Colors.white,
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                // RichText(
-                                //   text: TextSpan(
-                                //     children: [
-                                //       TextSpan(
-                                //         text: "   Welcome Back,\n",
-                                //         style: Theme.of(context)
-                                //             .textTheme
-                                //             .headline6
-                                //             ?.copyWith(
-                                //           color: Colors.white,
-                                //           fontWeight: FontWeight.normal,
-                                //         ),
-                                //       ),
-                                //       TextSpan(
-                                //         text: "  Aman!",
-                                //         style: Theme.of(context)
-                                //             .textTheme
-                                //             .headline6
-                                //             ?.copyWith(
-                                //           color: Colors.white,
-                                //           fontWeight: FontWeight.w600,
-                                //           fontSize: 28,
-                                //         ),
-                                //       )
-                                //     ],
-                                //   ),
-                                // ),
                                 InkWell(
                                     onTap: () {},
                                     child: Container(
                                       width: 50,
                                       height: 50,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         image: DecorationImage(
                                           image: NetworkImage(
                                               "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"),
@@ -148,7 +124,7 @@ class _MembershipsState extends State<Memberships> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 50.0,
                       ),
                       Container(
@@ -156,21 +132,21 @@ class _MembershipsState extends State<Memberships> {
                         constraints: BoxConstraints(
                           minHeight: MediaQuery.of(context).size.height - 200.0,
                         ),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(30.0),
                             topRight: Radius.circular(30.0),
                           ),
                           color: Constants.scaffoldBackgroundColor,
                         ),
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           vertical: 24.0,
                         ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: 24.0,
                               ),
@@ -183,64 +159,68 @@ class _MembershipsState extends State<Memberships> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 7.0),
-                            // Container(
-                            //   height: ScreenUtil().setHeight(100.0),
-                            //   child: Center(
-                            //     // lets make a widget for the cards
-                            //     child: LocationSlider(),
-                            //   ),
-                            // ),
-                            // LatestOrders(),
+                            const SizedBox(height: 7.0),
                             if (state is MemberStateLoading)
                               const Center(child: CircularProgressIndicator()),
                             if (state is MemberLoaded)
                               SizedBox(
                                 height: 500,
-                                child: ListView.builder(
-                                  itemCount: state.data.length,
-                                  itemBuilder: (context, index) {
-                                    final member = state.data[index];
-                                    return Card(
-                                        elevation: 3, // Card elevation
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 10,
-                                            horizontal: 20), // Card margin
-                                        child: ListTile(
-                                          leading: const Icon(Icons
-                                              .person), // Icon on the left side of the card
-                                          title: Text(
-                                              member.name), // Member's name
-                                          subtitle: Text(
-                                              member.sub), // Member's email
-                                          trailing: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              IconButton(
-                                                icon: const Icon(Icons.add),
-                                                color: Colors.green,
-                                                onPressed: () {
-                                                  BlocProvider.of<MemberBloc>(
-                                                          context)
-                                                      .add(
-                                                          AddMember(member.id));
-                                                },
-                                              ),
-                                              IconButton(
-                                                icon: const Icon(Icons.delete),
-                                                color: Colors.red,
-                                                onPressed: () {
-                                                  BlocProvider.of<MemberBloc>(
-                                                          context)
-                                                      .add(RemoveMember(
-                                                          member.id));
-                                                },
-                                              ),
-                                            ],
-                                          ), // Icons on the right side of the card
-                                        ));
-                                  },
-                                ),
+                                child: (state.data.isNotEmpty)
+                                    ? ListView.builder(
+                                        itemCount: state.data.length,
+                                        itemBuilder: (context, index) {
+                                          final member = state.data[index];
+                                          return Card(
+                                              elevation: 3, // Card elevation
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10,
+                                                      horizontal:
+                                                          20), // Card margin
+                                              child: ListTile(
+                                                leading: const Icon(Icons
+                                                    .person), // Icon on the left side of the card
+                                                title: Text(member
+                                                    .name), // Member's name
+                                                subtitle: Text(member
+                                                    .sub), // Member's email
+                                                trailing: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    IconButton(
+                                                      icon:
+                                                          const Icon(Icons.add),
+                                                      color: Colors.green,
+                                                      onPressed: () {
+                                                        BlocProvider.of<
+                                                                    MemberBloc>(
+                                                                context)
+                                                            .add(AddMember(
+                                                                member.id));
+                                                      },
+                                                    ),
+                                                    IconButton(
+                                                      icon: const Icon(
+                                                          Icons.delete),
+                                                      color: Colors.red,
+                                                      onPressed: () {
+                                                        BlocProvider.of<
+                                                                    MemberBloc>(
+                                                                context)
+                                                            .add(RemoveMember(
+                                                                member.id));
+                                                      },
+                                                    ),
+                                                  ],
+                                                ), // Icons on the right side of the card
+                                              ));
+                                        },
+                                      )
+                                    : const Center(
+                                        child: Text(
+                                            'There is no pending approvers remaining'),
+                                      ),
                               )
                           ],
                         ),

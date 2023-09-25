@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:letsmove_app/model/member.dart';
 import 'package:meta/meta.dart';
 
-import '../../../../model/data/member.dart';
 import '../../../../model/data/firebaseServices.dart';
 
 part 'member_event.dart';

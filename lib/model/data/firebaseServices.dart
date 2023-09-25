@@ -2,30 +2,15 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:letsmove_app/model/data/constant.dart';
-import 'package:letsmove_app/model/data/member.dart';
 import '../../views/blocs/Auth/bloc/auth_bloc.dart';
 import 'package:http/http.dart' as http;
+
+import '../member.dart';
 
 class FirestoreService {
   final FirebaseFirestore _firebaseCollection = FirebaseFirestore.instance;
 
-  // Stream<List<MemberModel>> getMembers() {
-  //   return _firebaseCollection
-  //       .collection('UsersData')
-  //       .where('isPending', isEqualTo: true)
-  //       .snapshots(includeMetadataChanges: true)
-  //       .map((snapshot) {
-  //     return snapshot.docs.map((doc) {
-  //       Map<String, dynamic> data = doc.data();
-  //       print(data['name']);
-  //       return MemberModel(
-  //           id: doc.id,
-  //           name: data['name'],
-  //           email: data['email'],
-  //           sub: data['subscription'].toString());
-  //     }).toList();
-  //   });
-  // }
+ 
 Future<List<MemberModel>> getMembers() async {
   final snapshot = await _firebaseCollection
       .collection('UsersData')
@@ -34,7 +19,6 @@ Future<List<MemberModel>> getMembers() async {
 
   return snapshot.docs.map((doc) {
     Map<String, dynamic> data = doc.data();
-    print(data['name']);
     return MemberModel(
       id: doc.id,
       name: data['name'],
@@ -104,7 +88,6 @@ Future<List<MemberModel>> getMembers() async {
         .then((value) async {
       try {
         String token = value.data()!['token'];
-        print(token);
         Uri url = Uri.parse('https://fcm.googleapis.com/fcm/send');
 
         await http
@@ -129,10 +112,8 @@ Future<List<MemberModel>> getMembers() async {
                   'to': token
                 }))
             .whenComplete(() {
-          print('Message is send');
         });
       } catch (e) {
-        print(e);
       }
     });
   }

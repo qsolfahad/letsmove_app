@@ -1,41 +1,25 @@
 import 'package:flutter/material.dart';
-import 'order.dart';
-import 'constants.dart';
+import '../../model/data/constant.dart';
 import 'order_card.dart';
 
 class LatestOrders extends StatelessWidget {
-  final List<Order> orders = [
-    Order(
-      id: 507,
-      deliveryAddress: "New Times Square",
-      arrivalDate: "7:46 AM",
-      placedDate: "01-08-2021",
-      status: OrderStatus.DELIVERING,
-    ),
-    Order(
-      id: 536,
-      deliveryAddress: "Victoria Square",
-      arrivalDate: "6:45 PM",
-      placedDate: "31-07-2021",
-      status: OrderStatus.PICKING_UP,
-    )
-  ];
+  LatestOrders({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20.0,
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 24.0,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: const [
                 Text(
                   "Activity",
                   style: TextStyle(
@@ -54,24 +38,24 @@ class LatestOrders extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
           ListView.separated(
             shrinkWrap: true,
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 16.0,
               vertical: 10.0,
             ),
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
               // Lets pass the order to a new widget and render it there
-              return OrderCard(
+              return OrderCards(
                 order: orders[index],
               );
             },
             separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(
+              return const SizedBox(
                 height: 15.0,
               );
             },

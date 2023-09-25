@@ -11,18 +11,16 @@ class PendingPage extends StatefulWidget {
 }
 
 class _PendingPageState extends State<PendingPage> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+        body: SafeArea(
+      child: Container(
         padding: const EdgeInsets.all(8),
         child: Column(children: [
           ListTile(
               title: const Text(
-                // 'Hi ' + sfName.toString() + ',',
                 '',
-
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
               subtitle: const Text(
@@ -43,13 +41,15 @@ class _PendingPageState extends State<PendingPage> {
           const SizedBox(
             height: 30,
           ),
-          const Text(
-            "Your Request is in panding please deposit your cash to become member.",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18),
+          const Center(
+            child: Text(
+              "Your Request is in panding please deposit your cash to become member.",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18),
+            ),
           ),
         ]),
       ),
-    );
+    ));
   }
 }

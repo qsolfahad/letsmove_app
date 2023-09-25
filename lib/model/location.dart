@@ -1,12 +1,12 @@
 import 'dart:ui';
 
-class Location {
+class Locations {
   final String? address;
   final String? state;
   final Color? color;
   final String? imagePath;
 
-  Location({
+  Locations({
     this.address,
     this.color,
     this.imagePath,

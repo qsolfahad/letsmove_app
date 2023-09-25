@@ -1,51 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'location.dart';
+
+import '../../../model/data/constant.dart';
 
 class LocationSlider extends StatelessWidget {
+  const LocationSlider({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Model to represent each card
 
     // Make a list to represent each card
-    List<Location> locations = [
-      //to-do
-      Location(
-        address: "Gym",
-        color: Colors.deepOrange,
-        state: "Active",
-        imagePath: "images/gym.png",
-      ),
-      Location(
-        address: "Pool",
-        color: Colors.blue,
-        state: "Active",
-        imagePath: "images/pool.png",
-      ),
-      Location(
-        address: "Nightclub",
-        color: Color.fromRGBO(89, 69, 199, 1),
-        state: "Active",
-        imagePath: "images/party.png",
-      ),
-      Location(
-        address: "Shopping Mall",
-        color: Colors.amber.shade500,
-        state: "Expired!",
-        imagePath: "images/shopping.png",
-      ),
-      Location(
-        address: "Park",
-        color: Colors.green,
-        state: "Expired!",
-        imagePath: "images/park.png",
-      ),
-    ];
-    return Container(
+    
+    return SizedBox(
       height: ScreenUtil().setHeight(90.0),
       child: ListView.separated(
-        physics: BouncingScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: 24.0),
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
@@ -55,7 +26,7 @@ class LocationSlider extends StatelessWidget {
               decoration: BoxDecoration(
                 color: locations[index].color,
                 borderRadius: BorderRadius.circular(8.0),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Color.fromRGBO(169, 176, 185, 0.42),
                     spreadRadius: 0,
@@ -64,7 +35,7 @@ class LocationSlider extends StatelessWidget {
                   ),
                 ],
               ),
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 vertical: 16.0,
                 horizontal: 12.0,
               ),
@@ -86,7 +57,7 @@ class LocationSlider extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: "${locations[index].address},\n",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             height: 1.5,
                             fontSize: 16.0,
@@ -94,7 +65,7 @@ class LocationSlider extends StatelessWidget {
                         ),
                         TextSpan(
                           text: locations[index].state,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16.0,
                           ),
                         )
@@ -107,7 +78,7 @@ class LocationSlider extends StatelessWidget {
           );
         },
         separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
+          return const SizedBox(
             width: 15.0,
           );
         },

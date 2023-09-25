@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 //import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'order.dart';
-import 'helper.dart';
 
-class OrderCard extends StatelessWidget {
-  final Order order;
+import '../../model/order.dart';
+import 'component/IconAndStatus.dart';
+import 'component/textfield.dart';
+class OrderCards extends StatelessWidget {
+   Order order;
 
-  OrderCard({required this.order});
+  OrderCards({super.key, required this.order});
 
   // For formatting date
   final DateFormat formatter = DateFormat("yyyy MM dd");
@@ -24,15 +25,15 @@ class OrderCard extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(8.0),
           border: Border.all(
-            color: Color.fromRGBO(220, 233, 245, 1),
+            color: const Color.fromRGBO(220, 233, 245, 1),
           ),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             getOrderIconWidget(order.status!),
-            SizedBox(
+            const SizedBox(
               width: 25.0,
             ),
             Expanded(
@@ -41,16 +42,16 @@ class OrderCard extends StatelessWidget {
                 children: [
                   Text(
                     getOrderStatusText(order.status!),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color.fromRGBO(19, 22, 33, 1),
                       fontSize: 16.0,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   textRow("Date", order.placedDate!),
-                  SizedBox(
+                  const SizedBox(
                     height: 5.0,
                   ),
                   textRow("Check out", order.arrivalDate!)
@@ -64,81 +65,5 @@ class OrderCard extends StatelessWidget {
   }
 }
 
-Widget textRow(String textOne, String textTwo) {
-  return Wrap(
-    children: [
-      Text(
-        "$textOne:",
-        style: TextStyle(
-          color: Color.fromRGBO(74, 77, 84, 0.7),
-          fontSize: 14.0,
-        ),
-      ),
-      SizedBox(
-        width: 4.0,
-      ),
-      Text(
-        textTwo,
-        style: TextStyle(
-          color: Color.fromRGBO(19, 22, 33, 1),
-          fontSize: 14.0,
-        ),
-      ),
-    ],
-  );
-}
 
-Widget getOrderIconWidget(OrderStatus status) {
-  switch (status) {
-    case OrderStatus.PICKING_UP:
-      return Container(
-        width: ScreenUtil().setWidth(37.0),
-        height: ScreenUtil().setHeight(37.0),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.blue.shade50,
-        ),
-        child: Icon(
-          Icons.abc,
-          color: Colors.blue,
-        ),
-      );
-    case OrderStatus.DELIVERING:
-      return Container(
-        width: ScreenUtil().setWidth(37.0),
-        height: ScreenUtil().setHeight(37.0),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Color.fromRGBO(255, 99, 2, 0.15),
-        ),
-        child: Icon(
-          Icons.abc,
-          color: Color.fromRGBO(255, 99, 2, 1),
-        ),
-      );
-    default:
-      return Container(
-        width: ScreenUtil().setWidth(37.0),
-        height: ScreenUtil().setHeight(37.0),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Color.fromRGBO(221, 40, 81, 0.18),
-        ),
-        child: Icon(
-         Icons.abc,
-          color: Color.fromRGBO(221, 40, 81, 1),
-        ),
-      );
-  }
-}
 
-String getOrderStatusText(OrderStatus status) {
-  switch (status) {
-    case OrderStatus.DELIVERING:
-      return "Gym";
-    case OrderStatus.PICKING_UP:
-      return "Pool";
-    default:
-      return "";
-  }
-}

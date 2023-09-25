@@ -41,8 +41,13 @@ _loadData(LoadUserDetail event, Emitter emit) async {
 
 _updateMember(UpdateMember event, Emitter emit) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setBool('isMember', false);
+ if(event.isCash == true){
+   prefs.setBool('isMember', false);
   prefs.setBool('isPending', true);
+ }else{
+   prefs.setBool('isMember', true);
+  prefs.setBool('isPending', false);
+ }
   String name = prefs.getString('name')!;
   String id = prefs.getString('id')!;
   String email = prefs.getString('email')!;
@@ -62,8 +67,7 @@ _updateMember(UpdateMember event, Emitter emit) async {
 
 _getSignUp(GetSignup event, Emitter emit) async {
   if (event is GetSignup) {
-    print('Signup triggered');
-    String value = validationSignup(event);
+     String value = validationSignup(event);
     if (value != '') {
       emit(SignupValidation(value));
     } else {
@@ -71,8 +75,7 @@ _getSignUp(GetSignup event, Emitter emit) async {
 //holds the user for below given time
       await Future.delayed(const Duration(seconds: 0), () async {
         //storing data in SharedPreferences
-        print('set');
-        FirestoreService().setUser(event);
+         FirestoreService().setUser(event);
         emit(SignupLoaded());
         
       }).onError((error, stackTrace) {
@@ -118,7 +121,6 @@ _saveToken(token, id) async {
 
 _getLogin(GetLogin event, Emitter emit) async {
   if (event is GetLogin) {
-    print('login triggered');
     String value = validationLogin(event);
 
     if (value != '') {
@@ -134,8 +136,7 @@ _getLogin(GetLogin event, Emitter emit) async {
       bool isAdmin = false;
       checkUser.then((querySnapshot) async {
         isAuthenticated = true;
-        print(isAuthenticated);
-        for (var element in querySnapshot.docs) {
+         for (var element in querySnapshot.docs) {
           name = element.data()['name'];
           isMember = element.data()['isMemberShipAllow'];
           sub = element.data()['subscription'];
@@ -145,14 +146,11 @@ _getLogin(GetLogin event, Emitter emit) async {
         setUserValuesSF(event, querySnapshot.docs.first.id, name, isMember, sub,
             isPending, isAdmin);
       }).catchError((error) {
-        print(error);
         isAuthenticated = false;
       });
       await Future.delayed(const Duration(seconds: 8), () async {
-        print('delay check$isAuthenticated');
         if (isAuthenticated) {
           emit(LoginLoaded());
-          print('emiited');
         } else {
           emit(LoginValidation("There is no user exist"));
         }
@@ -168,7 +166,6 @@ String validationLogin(GetLogin data) {
   if (data.email?.isEmpty == true) {
     return 'Please Enter Your Email-id';
   }
-  print('Validation' + EmailValidator.validate(data.email!).toString());
   if (!EmailValidator.validate(data.email!)) {
     return 'Please Enter a valid Email';
   }

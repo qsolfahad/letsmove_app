@@ -14,7 +14,8 @@ class LoadUserDetail extends AuthEvent {}
 class UpdateMember extends AuthEvent {
   String id;
   String sub;
-  UpdateMember(this.id, this.sub);
+  bool? isCash;
+  UpdateMember(this.id, this.sub, this.isCash);
 }
 
 class GetSignup extends AuthEvent {

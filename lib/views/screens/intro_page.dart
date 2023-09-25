@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:introduction_screen/introduction_screen.dart';
 import 'package:letsmove_app/model/data/constant.dart';
 import 'package:letsmove_app/views/screens/Authentication.dart';
 import 'package:page_transition/page_transition.dart';
@@ -10,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../routes/routes_name.dart';
 import '../blocs/intro/bloc/intro_bloc.dart';
+import 'component/indicator.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
@@ -19,8 +19,7 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage> {
-  final introKey = GlobalKey<IntroductionScreenState>();
-  final PageController _pageController = PageController();
+ final PageController _pageController = PageController();
   Timer? _timer;
 
   @override
@@ -93,7 +92,7 @@ class _IntroPageState extends State<IntroPage> {
                 padding: const EdgeInsets.only(bottom: 24.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: _buildPageIndicator(introClass, state),
+                  children: buildPageIndicator(introClass, state),
                 ),
               ),
             ),
@@ -160,24 +159,4 @@ class _IntroPageState extends State<IntroPage> {
     });
   }
 
-  List<Widget> _buildPageIndicator(len, IntroState state) {
-    List<Widget> indicators = [];
-    for (int i = 0; i < len.length; i++) {
-      indicators.add(i == state.counter ? _indicator(true) : _indicator(false));
-    }
-    return indicators;
-  }
-
-  Widget _indicator(bool isActive) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 150),
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      height: 8.0,
-      width: isActive ? 24.0 : 8.0,
-      decoration: BoxDecoration(
-        color: isActive ? Colors.white : Colors.grey,
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-      ),
-    );
-  }
 }

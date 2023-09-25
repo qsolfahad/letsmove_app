@@ -1,56 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:letsmove_app/routes/routes_name.dart';
+import 'package:page_transition/page_transition.dart';
 
-import '../../blocs/Auth/bloc/auth_bloc.dart';
+import '../subscription.dart';
 
-
-void showSubscriptionDialog(BuildContext context, GetUserDetails state) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return SimpleDialog(
-        title: const Text('Choose a Subscription'),
-        children: <Widget>[
-          SimpleDialogOption(
-            onPressed: () {
-              var text = '1 Month Subscription: \$300';
-              BlocProvider.of<AuthBloc>(context).add(UpdateMember(state.id!,text));
-              Navigator.pop(context, text);
-            },
-            child: const Text('1 Month Subscription: \$300'),
-          ),
-          SimpleDialogOption(
-            onPressed: () {
-              var text = '1 Year Subscription: \$600';
-              BlocProvider.of<AuthBloc>(context).add(UpdateMember(state.id!,text));
-              Navigator.pop(context, text);
-            },
-            child: const Text('1 Year Subscription: \$600'),
-          ),
-          SimpleDialogOption(
-            onPressed: () {
-              var text = 'Lifetime Subscription: \$1500';
-              BlocProvider.of<AuthBloc>(context).add(UpdateMember(state.id!,text));
-              Navigator.pop(context, text);
-            },
-            child: const Text('Lifetime Subscription: \$1500'),
-          ),
-        ],
+Widget memberButton(context) {
+  return ElevatedButton(
+    onPressed: () {
+      Navigator.push(
+        context,
+        PageTransition(
+          type: PageTransitionType.bottomToTop,
+          alignment: Alignment.topCenter,
+          child: const SubscriptionPage(),
+        ),
       );
     },
-  ).then((value) {
-    // Handle the selected subscription choice here (value is the selected subscription)
-
-    if (value != null) {
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('Congratulation you are member for: $value'),
-      //   ),
-      // );
-      Future.delayed(const Duration(seconds: 3), () {
-        Navigator.pushNamedAndRemoveUntil(context, pending, (route) => false);
-      });
-    }
-  });
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Colors.blue,
+      elevation: 3, // Elevation of the button
+      padding: const EdgeInsets.symmetric(
+          horizontal: 20, vertical: 10), // Button padding
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20), // Button border radius
+      ),
+    ),
+    child: const Text(
+      'Click Me to become a Member',
+      style: TextStyle(fontSize: 20, color: Colors.white),
+    ),
+  );
 }

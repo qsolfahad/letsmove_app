@@ -31,7 +31,6 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^4.0.0
-  introduction_screen: 
   bloc:
   flutter_bloc: ^8.1.1
   # The following adds the Cupertino Icons font to your application.
@@ -96,7 +95,7 @@ flutter:
   assets:
     - assets/image/
     - images/
-    - lib/views/screens/events.json
+    - lib/model/data/events.json
 
   fonts:
     - family: CustomIcons

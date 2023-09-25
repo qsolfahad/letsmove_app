@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:letsmove_app/views/screens/component/header.dart';
+
+import '../../model/data/constant.dart';
 
 class DifficultyLevel {
   final String title;
@@ -7,88 +10,63 @@ class DifficultyLevel {
   DifficultyLevel(this.title, this.description);
 }
 
-final List<DifficultyLevel> difficultyLevels = [
-  DifficultyLevel('Easy', 'Suitable for beginners'),
-  DifficultyLevel('Intermediate', 'Some experience required'),
-  DifficultyLevel('Advanced', 'Challenging for experts'),
-  DifficultyLevel('Expert', 'Only for the very experienced'),
-];
-
 class DifficultyLevelsStepIndicator extends StatefulWidget {
-  const DifficultyLevelsStepIndicator({super.key});
+  final title;
+  const DifficultyLevelsStepIndicator({super.key, this.title});
 
   @override
   _DifficultyLevelsStepIndicatorState createState() =>
       _DifficultyLevelsStepIndicatorState();
 }
-
+List<bool> _selected = List.generate(4, (index) => false);
 class _DifficultyLevelsStepIndicatorState
     extends State<DifficultyLevelsStepIndicator> {
-  int currentStep = 2; // Change this to set the current step index
+  // Change this to set the current step index
+  
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              for (var i = 0; i < difficultyLevels.length; i++)
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      currentStep = i;
-                    });
-                  },
-                  child: Container(
-                    width: 20,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: currentStep == i ? Colors.blue : Colors.grey,
+    return Column(
+      children: [
+        header(widget.title),
+        for (var index = 0; index < difficultyLevels.length; index++)
+          SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: GestureDetector(
+                child: Card(
+                  elevation: 4,
+                  color: _selected[index] ? Colors.blue : Colors.white,
+                  margin: const EdgeInsets.all(16),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        Text(
+                          difficultyLevels[index].title,
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: _selected[index] ? Colors.white : Colors.blue,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          difficultyLevels[index].description,
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Card(
-            elevation: 4,
-            margin: const EdgeInsets.all(16),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  const Text(
-                    'Selected Difficulty Level',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    difficultyLevels[currentStep].title,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    difficultyLevels[currentStep].description,
-                    style: const TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+                onTap: () {
+                  setState(() {
+                    _selected = List.generate(4, (index) => false);
+                    _selected[index] = !_selected[index];
+                  });
+                },
+              )),
+      ],
     );
   }
 }
